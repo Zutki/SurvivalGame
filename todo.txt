@@ -1,0 +1,13 @@
+TODO LIST:
+
+(note this is not priority in order)
+
+[ ] 1. Add audio
+	[D] A. Add ambient forest sounds
+	[ ] B. Add walking sounds
+[ ] 2. Add input smoothing
+[D] 3. Update tree model and texture
+[ ] 4. Install font for UI
+[ ] 5. Add jumping and crouching
+[ ] 6. Make new terrain (UPDATED 2021-02-07 | WRITE PROCEDURAL TERRAIN GENERATOR!)
+

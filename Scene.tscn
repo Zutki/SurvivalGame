@@ -1,0 +1,84 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://sounds/Ambient/ambient forest sounds.ogg" type="AudioStream" id=1]
+[ext_resource path="res://scripts/EnvironmentManager.gd" type="Script" id=2]
+[ext_resource path="res://scripts/PlayerController.gd" type="Script" id=3]
+[ext_resource path="res://crosshair.png" type="Texture" id=4]
+[ext_resource path="res://Models/landscape/landscapeV2.tscn" type="PackedScene" id=5]
+[ext_resource path="res://AmbientPlayer.gd" type="Script" id=6]
+[ext_resource path="res://TerrainGenerator.gd" type="Script" id=7]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 25, 0, 25 )
+
+[sub_resource type="CapsuleShape" id=2]
+radius = 0.5
+height = 1.5
+
+[node name="Scene" type="Spatial"]
+
+[node name="TerrainGenerator" type="MeshInstance" parent="."]
+script = ExtResource( 7 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+script = ExtResource( 6 )
+__meta__ = {
+"_editor_description_": "THIS HAD ISSUES WHEN PLAYING IN THE EDITOR. TO DO ANY REAL TESTING EXPORT GAME AND RUN IT!"
+}
+
+[node name="landscape" parent="." instance=ExtResource( 5 )]
+visible = false
+
+[node name="StaticBody" type="StaticBody" parent="landscape"]
+
+[node name="CollisionShape" type="CollisionShape" parent="landscape/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.269341, 0 )
+shape = SubResource( 1 )
+
+[node name="EnvironmentManager" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Player" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.19298, 0 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Player"]
+transform = Transform( -0.776057, 0.630662, -1.02748e-07, 0, -1.62921e-07, -1, -0.630662, -0.776057, 1.26436e-07, 0.0248938, 1.43712, 0 )
+shape = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0248938, 2.23189, 0 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crosshair" type="TextureRect" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Noti" type="RichTextLabel" parent="UI"]
+visible = false
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 200.0
+margin_bottom = 328.0
+text = "TEST NOTIFICATION
+ITEM RECIEVED
+ITEM DROPPED
+GOT ITEM 5X"
