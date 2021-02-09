@@ -32,6 +32,8 @@ func _input(event):
 	
 	
 func _physics_process(delta):
+	# noclip stuff
+	$CollisionShape.disabled = noClip
 	
 	# make sure that the player didn't fall of the map
 	if transform.origin.y < outOfBoundsLimit:
