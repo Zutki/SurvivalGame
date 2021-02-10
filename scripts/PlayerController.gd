@@ -36,8 +36,8 @@ func _physics_process(delta):
 	$CollisionShape.disabled = noClip
 	
 	# make sure that the player didn't fall of the map
-	if transform.origin.y < outOfBoundsLimit:
-		transform.origin = Vector3(0, 0, 0)
+	#if transform.origin.y < outOfBoundsLimit:
+		#transform.origin = Vector3(0, 0, 0)
 	
 	
 	# Gravity

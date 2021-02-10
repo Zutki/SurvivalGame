@@ -1,12 +1,20 @@
 extends Spatial
 
-var MaxInvalid = 3 # the maxium number of placement errors the tree is allowed to encounter
+var MaxInvalid # the maxium number of placement errors the tree is allowed to encounter
 var InvalidErrors = 0 # the current number of errors encountered
-var verticleOffset = -1 # the verticle offset into the ground (ONLY APPLIES TO TREEV2)
+var verticleOffset # the verticle offset into the ground (ONLY APPLIES TO TREEV2)
+
+var map_size_x
+var map_size_z
 
 var selfType
 
-func setUpSelf(treeType):
+func new(treeType, map_sizeX, map_sizeZ, max_invalid, vertOffset):
+	map_size_x = map_sizeX
+	map_size_z = map_sizeZ
+	MaxInvalid = max_invalid
+	verticleOffset = vertOffset
+	
 	selfType = treeType
 	instanceRun(treeType)
 
@@ -16,15 +24,15 @@ func instanceRun(selfType):
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	
-	var x_coord = rng.randi_range(-25, 25)
-	var z_coord = rng.randi_range(-25, 25)
+	var x_coord = rng.randi_range(map_size_x, map_size_z)
+	var z_coord = rng.randi_range(map_size_x, map_size_z)
 	#print(x_coord, z_coord)
 	
-	self.transform.origin = Vector3(x_coord, 20, z_coord)
+	self.transform.origin = Vector3(x_coord, 1000, z_coord)
 	
 	# Ray Cast without using a raycast node
 	var space_state = get_world().direct_space_state
-	var result = space_state.intersect_ray(self.transform.origin, Vector3(0, -100, 0), [self])
+	var result = space_state.intersect_ray(self.transform.origin, Vector3(0, -10000, 0), [self])
 	
 	if result:
 		if selfType == 2:

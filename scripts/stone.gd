@@ -1,22 +1,31 @@
 extends Spatial
 
-var MaxInvalid = 3 # the maxium number of placement errors the tree is allowed to encounter
+var MaxInvalid # the maxium number of placement errors the tree is allowed to encounter
 var InvalidErrors = 0 # the current number of errors encountered
 
+var map_size_x
+var map_size_z
+
+func new(map_sizeX, map_sizeZ, max_invalid):
+	MaxInvalid = max_invalid
+	map_size_x = map_sizeX
+	map_size_z = map_sizeZ
+	
 func instanceRun():
 	# Set Random Position
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	
-	var x_coord = rng.randi_range(-25, 25)
-	var z_coord = rng.randi_range(-25, 25)
+	var x_coord = rng.randi_range(map_size_x, map_size_z)
+	var z_coord = rng.randi_range(map_size_x, map_size_z)
 	#print(x_coord, z_coord)
 	
-	self.transform.origin = Vector3(x_coord, 20, z_coord)
+	# initial coords
+	self.transform.origin = Vector3(x_coord, 1000, z_coord)
 	
 	# Ray Cast without using a raycast node
 	var space_state = get_world().direct_space_state
-	var result = space_state.intersect_ray(self.transform.origin, Vector3(0, -100, 0), [self])
+	var result = space_state.intersect_ray(self.transform.origin, Vector3(0, -10000, 0), [self])
 	
 	if result:
 		self.transform.origin.y = result.position.y
