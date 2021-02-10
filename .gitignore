@@ -1,3 +1,4 @@
 # export presets and builds SHOULD NOT be tracked. There is a releases page for that.
 exports/
 export_presets.cfg
+README.md
