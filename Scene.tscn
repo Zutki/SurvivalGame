@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://sounds/Ambient/ambient forest sounds.ogg" type="AudioStream" id=1]
 [ext_resource path="res://scripts/EnvironmentManager.gd" type="Script" id=2]
@@ -17,6 +17,8 @@ extents = Vector3( 25, 0, 25 )
 [sub_resource type="CapsuleShape" id=3]
 radius = 0.5
 height = 1.5
+
+[sub_resource type="SphereMesh" id=4]
 
 [node name="Scene" type="Spatial"]
 
@@ -65,6 +67,11 @@ shape = SubResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0248938, 2.23189, 0 )
 far = 1016.3
 
+[node name="DEBUGOBJECT" type="MeshInstance" parent="Player"]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -87,13 +94,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Noti" type="RichTextLabel" parent="UI"]
-visible = false
+[node name="Noti" type="Label" parent="UI"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 200.0
 margin_bottom = 328.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "TEST NOTIFICATION
 ITEM RECIEVED
 ITEM DROPPED
 GOT ITEM 5X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
