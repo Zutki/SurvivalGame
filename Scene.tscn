@@ -1,24 +1,15 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://sounds/Ambient/ambient forest sounds.ogg" type="AudioStream" id=1]
-[ext_resource path="res://scripts/EnvironmentManager.gd" type="Script" id=2]
+[ext_resource path="res://scripts/EnviornmentGenerator.gd" type="Script" id=2]
 [ext_resource path="res://scripts/PlayerController.gd" type="Script" id=3]
 [ext_resource path="res://crosshair.png" type="Texture" id=4]
-[ext_resource path="res://Models/landscape/landscapeV2.tscn" type="PackedScene" id=5]
 [ext_resource path="res://AmbientPlayer.gd" type="Script" id=6]
 [ext_resource path="res://scripts/TerrainGeneratorNEW.gd" type="Script" id=7]
-[ext_resource path="res://terrain.material" type="Material" id=8]
-
-[sub_resource type="CapsuleMesh" id=1]
-
-[sub_resource type="BoxShape" id=2]
-extents = Vector3( 25, 0, 25 )
 
 [sub_resource type="CapsuleShape" id=3]
 radius = 0.5
 height = 1.5
-
-[sub_resource type="SphereMesh" id=4]
 
 [node name="Scene" type="Spatial"]
 
@@ -28,15 +19,16 @@ height = 1.5
 transform = Transform( 0.81244, -0.221522, 0.539323, 0, 0.925011, 0.379941, -0.583045, -0.308679, 0.751516, 0, 0, 0 )
 
 [node name="TerrainGenerator" type="Spatial" parent="World"]
+process_priority = 1
 script = ExtResource( 7 )
 
-[node name="MeshInstance" type="MeshInstance" parent="World"]
-visible = false
-mesh = SubResource( 1 )
-material/0 = ExtResource( 8 )
-
-[node name="EnvironmentManager" type="Node" parent="World"]
+[node name="EnvironmentManager" type="Spatial" parent="World"]
 script = ExtResource( 2 )
+mapSize = Vector2( -180, 180 )
+startingHeight = 100
+RaycastDistanceDown = -1000
+NumberOfTrees = 200
+NumberOfFoliage = 100
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
@@ -44,16 +36,6 @@ script = ExtResource( 6 )
 __meta__ = {
 "_editor_description_": "THIS HAD ISSUES WHEN PLAYING IN THE EDITOR. TO DO ANY REAL TESTING EXPORT GAME AND RUN IT!"
 }
-
-[node name="landscape" parent="." instance=ExtResource( 5 )]
-visible = false
-
-[node name="StaticBody" type="StaticBody" parent="landscape"]
-
-[node name="CollisionShape" type="CollisionShape" parent="landscape/StaticBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.269341, 0 )
-shape = SubResource( 2 )
-disabled = true
 
 [node name="Player" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.19298, 0 )
@@ -66,11 +48,6 @@ shape = SubResource( 3 )
 [node name="Camera" type="Camera" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0248938, 2.23189, 0 )
 far = 1016.3
-
-[node name="DEBUGOBJECT" type="MeshInstance" parent="Player"]
-transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-mesh = SubResource( 4 )
-material/0 = null
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0

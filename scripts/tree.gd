@@ -1,3 +1,4 @@
+
 extends Spatial
 
 var MaxInvalid # the maxium number of placement errors the tree is allowed to encounter

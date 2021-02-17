@@ -104,7 +104,7 @@ func _physics_process(delta):
 		
 	# Camera movement
 	if pitch >= 90:
-			pitch = 90
+		pitch = 90
 	if pitch <= -90:
 		pitch = -90
 		
