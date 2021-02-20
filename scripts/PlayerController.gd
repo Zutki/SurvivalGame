@@ -7,7 +7,7 @@ var speedH = 0.1 # Camera movement speed
 var speedV = 0.1 # Camera movement speed
 
 var gravity = 475 # gravity speed, def 900
-var noClip = true # Is player in noclip mode?
+var noClip = false # Is player in noclip mode?
 var outOfBoundsLimit = -25 # Limit before the player teleported back to the map
 
 var yaw = 0.0
@@ -65,7 +65,9 @@ func _physics_process(delta):
 	
 	if !noClip:
 		# warning-ignore:return_value_discarded
-		move_and_slide(Vector3.DOWN * delta * gravity)
+		#move_and_slide(Vector3.DOWN * delta * gravity)
+		if result.size() != 0: # MAKE SURE THAT WE ARE INTERSECTING FIRST!!!!
+			self.transform.origin.y = result.position.y
 	
 	
 	if Input.is_key_pressed(KEY_ESCAPE):

@@ -7,7 +7,7 @@
 [ext_resource path="res://AmbientPlayer.gd" type="Script" id=6]
 [ext_resource path="res://scripts/TerrainGeneratorNEW.gd" type="Script" id=7]
 
-[sub_resource type="CapsuleShape" id=3]
+[sub_resource type="CapsuleShape" id=1]
 radius = 0.5
 height = 1.5
 
@@ -43,7 +43,7 @@ script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
 transform = Transform( -0.776057, 0.630662, -1.02748e-07, 0, -1.62921e-07, -1, -0.630662, -0.776057, 1.26436e-07, 0.0248938, 1.43712, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0248938, 2.23189, 0 )
