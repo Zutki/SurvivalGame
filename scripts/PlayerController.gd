@@ -7,18 +7,26 @@ var speedH = 0.1 # Camera movement speed
 var speedV = 0.1 # Camera movement speed
 
 var gravity = 475 # gravity speed, def 900
+
+var jumpHeight = 4
+
 var noClip = false # Is player in noclip mode?
 var outOfBoundsLimit = -25 # Limit before the player teleported back to the map
 
+# internal variables
 var yaw = 0.0
 var pitch = 0.0
 
-var allowJumping
+var isJumping
 	
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	allowJumping = true
+	isJumping = false
 	
+#####################
+#   Generic Input   #
+#####################
+
 func _input(event):
 	if Input.is_key_pressed(KEY_N):
 		noClip = true
@@ -26,14 +34,22 @@ func _input(event):
 	if Input.is_key_pressed(KEY_M):
 		noClip = false
 		print("Entering normal mode")
+		
+	# exit the game
+	if Input.is_key_pressed(KEY_ESCAPE):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	if event is InputEventMouseMotion:
-		# Camera movement
-
+		# Camera movement relative
 		yaw -= speedH * event.relative.x
 		pitch -= speedV * event.relative.y
 	
-	
+
+var elapsed
+var starting_height
+
+var height_to_jump_to
+
 func _physics_process(delta):
 	# noclip stuff
 	$CollisionShape.disabled = noClip
@@ -43,45 +59,70 @@ func _physics_process(delta):
 	var cast_from = self.transform.origin + Vector3(0, 3, 0)
 	var cast_to = Vector3(self.transform.origin.x, -100, self.transform.origin.z)
 	var result = space_state.intersect_ray(cast_from, cast_to, [self])
+	 
+	get_node("../UI/DebugText").text = "Player Position: " + String(self.transform.origin)
+	if result.size() != 0:
+		get_node("../UI/DebugText").text += "\nGround Distance: " + String(self.transform.origin.y - result.position.y)
+	get_node("../UI/DebugText").text += "\nJumping Enabled: " + String(isJumping)
 	
-	# if the player is above 2.92 then they cant jump
-	#allowJumping = (self.transform.origin.y - result.position.y) <= 2.92
-	#print(allowJumping)
+	####################
+	#   Jumping Code   #
+	####################
 	
-	# debug stuff, just shows some info on the hud
-	get_node("../UI/Noti").text = "CURRENT POSITION: " + String(self.transform.origin)
+	if Input.is_key_pressed(KEY_SPACE) and isJumping == false:
+		isJumping = true
+		starting_height = self.transform.origin.y
+		height_to_jump_to = starting_height + jumpHeight
+		elapsed = 0.0
 	
+	if isJumping == true:
+		self.transform.origin.y = lerp(starting_height, height_to_jump_to, elapsed)
+		elapsed += delta
+		if (self.transform.origin.y == height_to_jump_to):
+			isJumping = false
 	
-	
-	# make sure that the player didn't fall of the map
-	#if transform.origin.y < outOfBoundsLimit:
-		#transform.origin = Vector3(0, 0, 0)
-	
-	
-	# Gravity
-	
-	var forwards_backwards
-	var sideways
+	###############
+	#   Gravity   #
+	###############
 	
 	if !noClip:
 		# warning-ignore:return_value_discarded
 		#move_and_slide(Vector3.DOWN * delta * gravity)
-		if result.size() != 0: # MAKE SURE THAT WE ARE INTERSECTING FIRST!!!!
-			self.transform.origin.y = result.position.y
+		if result.size() != 0 and isJumping == false:
+			if self.transform.origin.y - result.position.y < 0.5:
+				self.transform.origin.y = result.position.y
+			else:
+				# warning-ignore:return_value_discarded
+				move_and_slide(Vector3.DOWN * delta * gravity)
 	
+	var forwards_backwards
+	var sideways
 	
-	if Input.is_key_pressed(KEY_ESCAPE):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
+	# noclip stuff
 	if !noClip:
+		# if the player is not in no clip mode, then the player will not move up or down based on where the camera is looking
 		forwards_backwards = Vector3($Camera.global_transform.basis.z.x, 0, $Camera.global_transform.basis.z.z) * -1
 		sideways = Vector3($Camera.global_transform.basis.x.x, 0, $Camera.global_transform.basis.x.z) * -1
 	else:
 		forwards_backwards = $Camera.global_transform.basis.z * -1
 		sideways = $Camera.global_transform.basis.x * -1
 	
-	
-	# Movement using keyboard
+	keyboard_movement(delta, forwards_backwards, sideways)
+
+	# Camera movement
+	if pitch >= 90:
+		pitch = 90
+	if pitch <= -90:
+		pitch = -90
+		
+	# TODO: input smoothing
+	$Camera.rotation_degrees = Vector3(pitch, yaw, 0)
+
+#######################
+#  Keyboard Movement  #
+#######################
+
+func keyboard_movement(delta, forwards_backwards, sideways):
 	if Input.is_key_pressed(KEY_W):
 		# warning-ignore:return_value_discarded
 		move_and_slide(forwards_backwards * speed * delta)
@@ -97,18 +138,3 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_D):
 		# warning-ignore:return_value_discarded
 		move_and_slide(sideways * -1 * speed * delta)
-		
-	# jumping
-	if Input.is_key_pressed(KEY_SPACE) and allowJumping == true:
-		allowJumping = false
-		# warning-ignore:return_value_discarded
-		move_and_slide(Vector3.UP * jumpingForce * delta)
-		
-	# Camera movement
-	if pitch >= 90:
-		pitch = 90
-	if pitch <= -90:
-		pitch = -90
-		
-	# TODO: input smoothing
-	$Camera.rotation_degrees = Vector3(pitch, yaw, 0)
