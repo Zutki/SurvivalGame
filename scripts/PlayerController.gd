@@ -3,6 +3,8 @@ extends KinematicBody
 var speed = 500 # Player Speed
 var jumpingForce = 1200
 
+var runSpeed = 1000 # running speed
+
 var speedH = 0.1 # Camera movement speed
 var speedV = 0.1 # Camera movement speed
 
@@ -18,10 +20,12 @@ var yaw = 0.0
 var pitch = 0.0
 
 var isJumping
+var allowJumping
 	
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	isJumping = false
+	allowJumping = true
 	
 #####################
 #   Generic Input   #
@@ -64,22 +68,27 @@ func _physics_process(delta):
 	if result.size() != 0:
 		get_node("../UI/DebugText").text += "\nGround Distance: " + String(self.transform.origin.y - result.position.y)
 	get_node("../UI/DebugText").text += "\nJumping Enabled: " + String(isJumping)
+	get_node("../UI/DebugText").text += "\nJumping Allowed: " + String(allowJumping)
 	
 	####################
 	#   Jumping Code   #
 	####################
 	
-	if Input.is_key_pressed(KEY_SPACE) and isJumping == false:
+	if Input.is_key_pressed(KEY_SPACE) and isJumping == false and allowJumping == true:
 		isJumping = true
+		allowJumping = false
 		starting_height = self.transform.origin.y
 		height_to_jump_to = starting_height + jumpHeight
 		elapsed = 0.0
 	
 	if isJumping == true:
 		self.transform.origin.y = lerp(starting_height, height_to_jump_to, elapsed)
-		elapsed += delta
-		if (self.transform.origin.y == height_to_jump_to):
+		elapsed += delta * 2
+		if (self.transform.origin.y >= height_to_jump_to):
 			isJumping = false
+	
+	if result.size() != 0:
+		allowJumping = self.transform.origin.y - result.position.y < 0.5
 	
 	###############
 	#   Gravity   #
@@ -123,18 +132,24 @@ func _physics_process(delta):
 #######################
 
 func keyboard_movement(delta, forwards_backwards, sideways):
+	var current_speed
+	if Input.is_key_pressed(KEY_SHIFT):
+		current_speed = runSpeed
+	else:
+		current_speed = speed 
+	
 	if Input.is_key_pressed(KEY_W):
 		# warning-ignore:return_value_discarded
-		move_and_slide(forwards_backwards * speed * delta)
+		move_and_slide(forwards_backwards * current_speed * delta)
 	
 	if Input.is_key_pressed(KEY_S):
 		# warning-ignore:return_value_discarded
-		move_and_slide(forwards_backwards * -1 * speed * delta)
+		move_and_slide(forwards_backwards * -1 * current_speed * delta)
 		
 	if Input.is_key_pressed(KEY_A):
 		# warning-ignore:return_value_discarded
-		move_and_slide(sideways * speed * delta)
+		move_and_slide(sideways * current_speed * delta)
 		
 	if Input.is_key_pressed(KEY_D):
 		# warning-ignore:return_value_discarded
-		move_and_slide(sideways * -1 * speed * delta)
+		move_and_slide(sideways * -1 * current_speed * delta)

@@ -6,12 +6,16 @@ extends Spatial
 
 func _ready():
 	var noise = OpenSimplexNoise.new()
-	noise.seed = 1200
-	noise.period = 200
-	noise.octaves = 6
+	#noise.seed = 1200
+	
+	noise.seed = rand_range(0, 999999)
+	
+	noise.period = 400
+	noise.octaves = 8
 	
 	# PRESETS FOR TERRAIN:
 	# p = 200 & o = 8 : Slightly Hilly Terrain
+	# p = 200 & o = 6 : somewhat hilly terrain
 	
 	
 	
