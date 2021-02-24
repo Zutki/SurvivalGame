@@ -1,0 +1,193 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://fonts/NotoSans-Reg.tres" type="DynamicFont" id=1]
+[ext_resource path="res://images/mainMenuBackground.png" type="Texture" id=2]
+[ext_resource path="res://fonts/NotoSans-Reg-Small.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scripts/MainMenuController.gd" type="Script" id=4]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundImage" type="Sprite" parent="."]
+position = Vector2( 960, 544 )
+texture = ExtResource( 2 )
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.033
+anchor_top = 0.044
+anchor_right = 0.384
+anchor_bottom = 0.171
+margin_left = 0.639999
+margin_top = 0.479996
+margin_right = -0.280029
+margin_bottom = 0.319992
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "Survival Game"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="Control" parent="."]
+anchor_right = 0.362
+anchor_bottom = 1.004
+margin_top = 4.0
+margin_right = 0.959961
+margin_bottom = -4.32007
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ContinueGame" type="Button" parent="Buttons"]
+anchor_left = 0.093
+anchor_top = 0.355
+anchor_right = 0.874
+anchor_bottom = 0.452
+margin_left = -2.728
+margin_top = 0.019989
+margin_right = -0.304016
+margin_bottom = -0.35202
+disabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Buttons/ContinueGame"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 3 )
+text = "Continue (WIP)"
+align = 1
+valign = 1
+
+[node name="NewGame" type="Button" parent="Buttons"]
+anchor_left = 0.093
+anchor_top = 0.47
+anchor_right = 0.878
+anchor_bottom = 0.567
+margin_left = 0.271996
+margin_top = 0.279968
+margin_right = -0.0880127
+margin_bottom = -0.092041
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Buttons/NewGame"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 3 )
+text = "New Game"
+align = 1
+valign = 1
+
+[node name="Settings" type="Button" parent="Buttons"]
+anchor_left = 0.092
+anchor_top = 0.589
+anchor_right = 0.874
+anchor_bottom = 0.686
+margin_left = -2.03201
+margin_top = 0.235962
+margin_right = -0.304016
+margin_bottom = -0.136047
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Buttons/Settings"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 3 )
+text = "Settings"
+align = 1
+valign = 1
+
+[node name="Quit" type="Button" parent="Buttons"]
+anchor_left = 0.089
+anchor_top = 0.71
+anchor_right = 0.874
+anchor_bottom = 0.808
+margin_left = 0.0559998
+margin_top = 1.03998
+margin_right = -0.304016
+margin_bottom = -0.40802
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Buttons/Quit"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 3 )
+text = "Quit Game"
+align = 1
+valign = 1
+
+[node name="Panels" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.059
+anchor_right = 0.967
+anchor_bottom = 0.948
+margin_top = 0.279995
+margin_right = -0.640137
+margin_bottom = 0.159912
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewGamePanel" type="Panel" parent="Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.008
+margin_bottom = 0.320007
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panels/NewGamePanel"]
+anchor_left = 0.08
+anchor_top = 0.033
+anchor_right = 0.929
+anchor_bottom = 0.107
+margin_left = 0.319992
+margin_top = 0.0559998
+margin_right = -0.384033
+margin_bottom = 0.423988
+custom_fonts/font = ExtResource( 3 )
+text = "New Game Creation"
+align = 1
+valign = 1
+
+[node name="SettingsPanel" type="Panel" parent="Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.008
+margin_bottom = 0.320007
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panels/SettingsPanel"]
+anchor_left = 0.08
+anchor_top = 0.033
+anchor_right = 0.929
+anchor_bottom = 0.107
+margin_left = 0.319992
+margin_top = 0.0559998
+margin_right = -0.384033
+margin_bottom = 0.423988
+custom_fonts/font = ExtResource( 3 )
+text = "Settings"
+align = 1
+valign = 1
+[connection signal="button_down" from="Buttons/NewGame" to="." method="_on_NewGame_button_down"]
+[connection signal="button_down" from="Buttons/Settings" to="." method="_on_Settings_button_down"]
+[connection signal="button_down" from="Buttons/Quit" to="." method="_on_Quit_button_down"]
