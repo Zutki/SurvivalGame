@@ -16,8 +16,8 @@ _global_script_class_icons={
 [application]
 
 config/name="SurvivalGame"
-run/main_scene="res://Scene.tscn"
-config/icon="res://icon2.png"
+run/main_scene="res://Scenes/Scene.tscn"
+config/icon="res://images/icon2.png"
 
 [audio]
 

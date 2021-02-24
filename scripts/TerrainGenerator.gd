@@ -8,7 +8,7 @@ func _ready():
 	var noise = OpenSimplexNoise.new()
 	#noise.seed = 1200
 	
-	noise.seed = rand_range(0, 999999)
+	noise.seed = randi()
 	
 	noise.period = 400
 	noise.octaves = 8
@@ -16,8 +16,6 @@ func _ready():
 	# PRESETS FOR TERRAIN:
 	# p = 200 & o = 8 : Slightly Hilly Terrain
 	# p = 200 & o = 6 : somewhat hilly terrain
-	
-	
 	
 	var plane_mesh = PlaneMesh.new() # create the plane
 	plane_mesh.size = Vector2(400, 400) # set the size of the plane

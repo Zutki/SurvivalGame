@@ -64,11 +64,13 @@ func _physics_process(delta):
 	var cast_to = Vector3(self.transform.origin.x, -100, self.transform.origin.z)
 	var result = space_state.intersect_ray(cast_from, cast_to, [self])
 	 
-	get_node("../UI/DebugText").text = "Player Position: " + String(self.transform.origin)
+	var dbText = get_node("../UI/DebugText")
+	
+	dbText.text = "Player Position: " + String(self.transform.origin)
 	if result.size() != 0:
-		get_node("../UI/DebugText").text += "\nGround Distance: " + String(self.transform.origin.y - result.position.y)
-	get_node("../UI/DebugText").text += "\nJumping Enabled: " + String(isJumping)
-	get_node("../UI/DebugText").text += "\nJumping Allowed: " + String(allowJumping)
+		dbText.text += "\nGround Distance: " + String(self.transform.origin.y - result.position.y)
+	dbText.text += "\nJumping Enabled: " + String(isJumping)
+	dbText.text += "\nJumping Allowed: " + String(allowJumping)
 	
 	####################
 	#   Jumping Code   #
