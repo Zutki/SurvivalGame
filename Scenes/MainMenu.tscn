@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://fonts/NotoSans-Reg.tres" type="DynamicFont" id=1]
 [ext_resource path="res://images/mainMenuBackground.png" type="Texture" id=2]
 [ext_resource path="res://fonts/NotoSans-Reg-Small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scripts/MainMenuController.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/NewGamePanel.gd" type="Script" id=5]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -144,13 +145,95 @@ __meta__ = {
 }
 
 [node name="NewGamePanel" type="Panel" parent="Panels"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.008
 margin_bottom = 0.320007
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="EditTerrainGeneratorSettings" type="Control" parent="Panels/NewGamePanel"]
+visible = false
+anchor_left = 0.071
+anchor_top = 0.132
+anchor_right = 0.929
+anchor_bottom = 0.355
+margin_left = 0.384007
+margin_top = 0.224007
+margin_right = -0.383911
+margin_bottom = 0.360016
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Octave" type="HSlider" parent="Panels/NewGamePanel/EditTerrainGeneratorSettings"]
+anchor_left = 0.023
+anchor_top = 0.273
+anchor_right = 0.69
+anchor_bottom = 0.347
+margin_left = 0.335991
+margin_top = 0.0319939
+margin_right = 0.079895
+margin_bottom = 0.0479965
+min_value = 1.0
+max_value = 9.0
+value = 1.0
+rounded = true
+editable = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="Label" parent="Panels/NewGamePanel/EditTerrainGeneratorSettings/Octave"]
+anchor_left = 1.078
+anchor_right = 1.156
+anchor_bottom = 1.0
+margin_left = 0.0639648
+margin_right = 0.127991
+margin_bottom = -2.0
+text = "400"
+
+[node name="Title" type="Label" parent="Panels/NewGamePanel/EditTerrainGeneratorSettings/Octave"]
+anchor_top = -2.0
+anchor_right = 0.187
+anchor_bottom = -1.0
+margin_right = 0.255997
+text = "Perlin Octave"
+
+[node name="Period" type="HSlider" parent="Panels/NewGamePanel/EditTerrainGeneratorSettings"]
+anchor_left = 0.023
+anchor_top = 0.56
+anchor_right = 0.69
+anchor_bottom = 0.634
+margin_left = 0.335999
+margin_top = 0.0399857
+margin_right = 0.0799561
+margin_bottom = 0.0559845
+min_value = 200.0
+max_value = 1000.0
+value = 200.0
+rounded = true
+editable = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="Label" parent="Panels/NewGamePanel/EditTerrainGeneratorSettings/Period"]
+anchor_left = 1.078
+anchor_right = 1.156
+anchor_bottom = 1.0
+margin_left = 0.0639648
+margin_right = 0.127991
+margin_bottom = -2.0
+text = "400"
+
+[node name="Title" type="Label" parent="Panels/NewGamePanel/EditTerrainGeneratorSettings/Period"]
+anchor_top = -2.0
+anchor_right = 0.187
+anchor_bottom = -1.0
+margin_right = 0.255997
+text = "Perlin Period"
 
 [node name="Label" type="Label" parent="Panels/NewGamePanel"]
 anchor_left = 0.08
@@ -165,6 +248,153 @@ custom_fonts/font = ExtResource( 3 )
 text = "New Game Creation"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WorldType" type="OptionButton" parent="Panels/NewGamePanel"]
+anchor_left = 0.214
+anchor_top = 0.198
+anchor_right = 0.554
+anchor_bottom = 0.219
+margin_left = 0.256012
+margin_top = 0.335999
+margin_right = -0.383942
+margin_bottom = 0.00799561
+text = "World Type"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WorldPreset" type="Label" parent="Panels/NewGamePanel/WorldType"]
+anchor_left = -0.421
+anchor_right = -0.053
+anchor_bottom = 1.0
+margin_left = -0.0159912
+margin_right = 0.112001
+text = "World Preset:"
+valign = 1
+
+[node name="WorldSeed" type="Label" parent="Panels/NewGamePanel"]
+anchor_left = 0.071
+anchor_top = 0.264
+anchor_right = 0.162
+anchor_bottom = 0.279
+margin_left = 0.384007
+margin_top = 0.448013
+margin_right = -41.152
+margin_bottom = -0.071991
+text = "World Seed: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Seed" type="SpinBox" parent="Panels/NewGamePanel/WorldSeed"]
+visible = false
+anchor_left = 3.16
+anchor_top = -0.5
+anchor_right = 6.914
+anchor_bottom = 1.214
+margin_left = 0.0399933
+margin_top = -3.05176e-05
+margin_right = -0.0340576
+margin_bottom = 0.00396729
+align = 1
+
+[node name="Random" type="CheckBox" parent="Panels/NewGamePanel/WorldSeed"]
+anchor_left = 1.58
+anchor_top = -0.5
+anchor_right = 3.012
+anchor_bottom = 1.214
+margin_left = 0.0199966
+margin_top = -3.05176e-05
+margin_right = -0.972
+margin_bottom = 0.00396729
+pressed = true
+text = "Random Seed"
+
+[node name="PerlinNoiseEditor" type="Label" parent="Panels/NewGamePanel"]
+visible = false
+margin_left = 64.0
+margin_top = 322.0
+margin_right = 201.0
+margin_bottom = 336.0
+text = "Perlin Noise Settings:"
+
+[node name="Period" type="HSlider" parent="Panels/NewGamePanel/PerlinNoiseEditor"]
+anchor_left = 0.803
+anchor_top = 3.286
+anchor_right = 3.664
+anchor_bottom = 4.429
+margin_left = -0.0110016
+margin_top = -0.0039444
+margin_right = 0.0319519
+margin_bottom = -0.0059433
+min_value = 200.0
+max_value = 1000.0
+value = 200.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Panels/NewGamePanel/PerlinNoiseEditor/Period"]
+anchor_left = -0.163
+anchor_right = -0.041
+anchor_bottom = 0.875
+margin_left = -0.104
+margin_right = -7.928
+margin_bottom = -9.53674e-07
+text = "Period: "
+
+[node name="value" type="Label" parent="Panels/NewGamePanel/PerlinNoiseEditor/Period"]
+anchor_left = 1.102
+anchor_right = 1.204
+anchor_bottom = 1.0
+margin_left = 0.0159912
+margin_right = 0.0319519
+margin_bottom = -2.0
+text = "val"
+
+[node name="Octave" type="HSlider" parent="Panels/NewGamePanel/PerlinNoiseEditor"]
+anchor_left = 0.803
+anchor_top = 7.857
+anchor_right = 3.664
+anchor_bottom = 9.0
+margin_left = -0.0110016
+margin_top = 0.00205994
+margin_right = 0.0319519
+margin_bottom = 6.10352e-05
+min_value = 1.0
+max_value = 8.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Panels/NewGamePanel/PerlinNoiseEditor/Octave"]
+anchor_left = -0.163
+anchor_right = -0.041
+anchor_bottom = 0.875
+margin_left = -0.104
+margin_right = 1.072
+margin_bottom = -9.53674e-07
+text = "Octave:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="value" type="Label" parent="Panels/NewGamePanel/PerlinNoiseEditor/Octave"]
+anchor_left = 1.102
+anchor_right = 1.204
+anchor_bottom = 1.0
+margin_left = 0.0159912
+margin_right = 0.0319519
+margin_bottom = -2.0
+text = "val"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SettingsPanel" type="Panel" parent="Panels"]
 visible = false
@@ -191,3 +421,9 @@ valign = 1
 [connection signal="button_down" from="Buttons/NewGame" to="." method="_on_NewGame_button_down"]
 [connection signal="button_down" from="Buttons/Settings" to="." method="_on_Settings_button_down"]
 [connection signal="button_down" from="Buttons/Quit" to="." method="_on_Quit_button_down"]
+[connection signal="value_changed" from="Panels/NewGamePanel/EditTerrainGeneratorSettings/Octave" to="." method="_on_Octave_value_changed"]
+[connection signal="value_changed" from="Panels/NewGamePanel/EditTerrainGeneratorSettings/Period" to="." method="_on_Period_value_changed"]
+[connection signal="item_selected" from="Panels/NewGamePanel/WorldType" to="Panels/NewGamePanel" method="_on_WorldType_item_selected"]
+[connection signal="toggled" from="Panels/NewGamePanel/WorldSeed/Random" to="Panels/NewGamePanel" method="_on_Random_toggled"]
+[connection signal="value_changed" from="Panels/NewGamePanel/PerlinNoiseEditor/Period" to="Panels/NewGamePanel" method="_on_Period_value_changed"]
+[connection signal="value_changed" from="Panels/NewGamePanel/PerlinNoiseEditor/Octave" to="Panels/NewGamePanel" method="_on_Octave_value_changed"]
