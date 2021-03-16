@@ -4,7 +4,7 @@
 [ext_resource path="res://images/mainMenuBackground.png" type="Texture" id=2]
 [ext_resource path="res://fonts/NotoSans-Reg-Small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scripts/MainMenuController.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/NewGamePanel.gd" type="Script" id=5]
+[ext_resource path="res://scripts/NewGamePanel.gd" type="Script" id=5]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
