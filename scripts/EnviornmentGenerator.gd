@@ -14,6 +14,9 @@ export var NumberOfFoliage = int()
 
 var exclusions = []
 
+############################################
+#  THIS CODE IS OLD AND NO LONGER USED!!!  #
+############################################
 
 ##################################
 #								 #

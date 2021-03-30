@@ -1,9 +1,15 @@
 extends Label
 
-#var player
-#
-#func _ready():
-#	 player = get_node("../../Player")
-#
-#func _process(delta):
-#	text = "Player Position: " + String(player.transform.origin)
+var displayText = []
+
+func addText(Text):
+	displayText.append(Text)
+
+func reset():
+	self.text = ""
+	displayText = []
+	
+func _process(delta):
+	for string in displayText:
+		self.text += string
+	reset()

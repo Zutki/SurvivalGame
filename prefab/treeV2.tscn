@@ -5,7 +5,7 @@
 [ext_resource path="res://Models/tree/TreeV2/treeV2.dae" type="PackedScene" id=4]
 
 [sub_resource type="CylinderShape" id=1]
-radius = 1.04219
+radius = 1.18697
 height = 5.51937
 
 [sub_resource type="CylinderShape" id=2]

@@ -1,12 +1,14 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://scripts/EnviornmentGenerator.gd" type="Script" id=2]
-[ext_resource path="res://scripts/DebugText.gd" type="Script" id=3]
 [ext_resource path="res://images/crosshair.png" type="Texture" id=4]
 [ext_resource path="res://scripts/AmbientPlayer.gd" type="Script" id=5]
 [ext_resource path="res://scripts/TerrainGenerator.gd" type="Script" id=6]
 [ext_resource path="res://sounds/Ambient/ambient forest sounds.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Scenes/Interaction.gd" type="Script" id=8]
+[ext_resource path="res://images/crosshairThings/bar.png" type="Texture" id=9]
+[ext_resource path="res://images/crosshairThings/Transparent.png" type="Texture" id=10]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -50,6 +52,10 @@ shape = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0248938, 2.23189, 0 )
 far = 1016.3
 
+[node name="Interaction" type="Spatial" parent="Player"]
+script = ExtResource( 8 )
+interaction_distance_limit = 100000
+
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -58,14 +64,14 @@ __meta__ = {
 }
 
 [node name="Crosshair" type="TextureRect" parent="UI"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -8.0
-margin_top = -8.0
-margin_right = 8.0
-margin_bottom = 8.0
+anchor_left = 0.496
+anchor_top = 0.493
+anchor_right = 0.504
+anchor_bottom = 0.507
+margin_left = -0.320068
+margin_top = -0.440063
+margin_right = 0.320007
+margin_bottom = 0.439941
 texture = ExtResource( 4 )
 expand = true
 __meta__ = {
@@ -81,7 +87,43 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Position info
 rat info
 idk"
-script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Interact" type="Label" parent="UI"]
+anchor_left = 0.467
+anchor_top = 0.452
+anchor_right = 0.533
+anchor_bottom = 0.481
+margin_left = -0.640015
+margin_top = -0.160034
+margin_right = 0.639893
+margin_bottom = 0.519958
+text = "Interact"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress" type="TextureProgress" parent="UI"]
+anchor_left = 0.483
+anchor_top = 0.47
+anchor_right = 0.517
+anchor_bottom = 0.53
+margin_left = 0.639954
+margin_top = 0.399963
+margin_right = -0.640015
+margin_bottom = -0.400024
+step = 0.1
+texture_under = ExtResource( 10 )
+texture_over = ExtResource( 10 )
+texture_progress = ExtResource( 9 )
+fill_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="UI"]
+wait_time = 3.263
